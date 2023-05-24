@@ -16,6 +16,7 @@ import java.util.List;
 public class PessoaDAO {
     
     private static PessoaDAO instancia;
+    private int proximoID; // variavel que irá armazenar o proximo ID 
     
     public static PessoaDAO getInstancia(){
         if(instancia == null){
@@ -23,13 +24,16 @@ public class PessoaDAO {
         }
         return instancia;
     }
-    private PessoaDAO(){
-        
-    }
-    
+
     private List<Pessoa> lista = new ArrayList<>();
     
+
+    private PessoaDAO(){
+        proximoID = 1;
+    }
+    
     public void adicionarPessoa(Pessoa pessoa){
+        
         //Salva pessoa dentro da lista se nao tiver nenhuma pessoa com esse ID
         for(Pessoa p: lista){ //enhanced for ou for-each - percorre a lista de pessos onde a variavel p assume cada elemento da lista a cada iteração
             if(p.getId() == pessoa.getId()){ //verifica o id de cada elemento comparando se ele é o mesmo passado no parametro pessoa
@@ -37,8 +41,11 @@ public class PessoaDAO {
                 return;
             }  
         }
+        //int id = proximoID;
         lista.add(pessoa); 
         System.err.println("Pessoa adicionada com sucesso");
+        
+        //proximoID++;
         
     }
     

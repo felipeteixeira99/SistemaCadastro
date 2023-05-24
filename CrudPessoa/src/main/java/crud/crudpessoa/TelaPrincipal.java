@@ -204,10 +204,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(campoIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoBuscar)
-                    .addComponent(botaoLimpar)
-                    .addComponent(botaoSalvar))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botaoBuscar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(botaoLimpar)
+                        .addComponent(botaoSalvar)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -225,6 +226,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         int id = Integer.parseInt(campoID.getText());
         pessoaDAO.deletarPessoaPorId(id);
         LimparCampos();
+        atualizarTabela();
     }//GEN-LAST:event_botaoApagarActionPerformed
 
     private void botaoLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoLimparActionPerformed
@@ -247,8 +249,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pessoa.setNome(nome);
         pessoa.setSexo(sexo);
         pessoa.setIdade(idade);
+        
+        PessoaDAO pessoaDAO = PessoaDAO.getInstancia();
         pessoaDAO.adicionarPessoa(pessoa);
-        pessoaDAO.alterarPessoa(pessoa);
+        
+        //pessoaDAO.adicionarPessoa(pessoa);
+        //pessoaDAO.alterarPessoa(pessoa);
         LimparCampos();
         
         
