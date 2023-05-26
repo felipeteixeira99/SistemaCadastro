@@ -22,10 +22,15 @@ public class CrudPessoa {
         pessoa2.setSexo("Feminino");
         pessoaDAO.adicionarPessoa(pessoa2);
         
+        List<Pessoa> lista = pessoaDAO.buscarTodos();
+        lista.clear();
+        
+        
         /*
         List<Pessoa> listaPessoas = pessoaDAO.buscarTodos(); //armazena os objetos do tipo pessoa e armazena uma dentro de uma lista 
+        */
         
-        for(Pessoa pessoa : listaPessoas){
+        for(Pessoa pessoa : pessoaDAO.buscarTodos()){
             System.out.println("ID: " + pessoa.getId());
             System.out.println("NOME: " + pessoa.getNome());
             System.out.println("IDADE: " + pessoa.getIdade());
@@ -34,12 +39,12 @@ public class CrudPessoa {
         }
         
         
-        Pessoa pessoaAlterada = new Pessoa();
-        pessoa2.setId(2);
-        pessoa2.setNome("Jonas");
-        pessoa2.setIdade(22);
-        pessoa2.setSexo("Feminino");
-        pessoaDAO.alterarPessoa(pessoa2);
+        //Pessoa pessoaAlterada = new Pessoa();
+        //pessoa2.setId(2);
+        //pessoa2.setNome("Jonas");
+        //pessoa2.setIdade(22);
+        //pessoa2.setSexo("Feminino");
+        //pessoaDAO.alterarPessoa(pessoa2);
         
         /*
         int idBusca = 2;
@@ -57,7 +62,7 @@ public class CrudPessoa {
         else{
             System.out.println("Nenhuma Pessoa Encontrada");
         }
-        */
+        
    
         
         pessoaDAO.deletarPessoaPorId(1);
@@ -73,7 +78,7 @@ public class CrudPessoa {
             System.out.println("-----------------------------");
         }
         
-        
+       */ 
     }
     
     

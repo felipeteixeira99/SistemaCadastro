@@ -33,26 +33,22 @@ public class PessoaDAO {
     }
     
     public void adicionarPessoa(Pessoa pessoa){
-        
-        //Salva pessoa dentro da lista se nao tiver nenhuma pessoa com esse ID
-        for(Pessoa p: lista){ //enhanced for ou for-each - percorre a lista de pessos onde a variavel p assume cada elemento da lista a cada iteração
-            if(p.getId() == pessoa.getId()){ //verifica o id de cada elemento comparando se ele é o mesmo passado no parametro pessoa
-                System.out.println("Erro: Já Existe uma pessoa com o mesmo ID.");
-                return;
-            }  
-        }
-        //int id = proximoID;
+        //int id = proximoID;,
+        pessoa.setId(proximoID++);
         lista.add(pessoa); 
-        System.err.println("Pessoa adicionada com sucesso");
+        System.out.println("Pessoa adicionada com sucesso: ID -  " + pessoa.getId());
         
         //proximoID++;
-        
+       
     }
-    
     //Retorna todas as pessoas na lista
     public List<Pessoa> buscarTodos(){
-        return lista;  
+        List<Pessoa> listaP = new ArrayList();
+        listaP.addAll(this.lista);
+        return listaP;  
     }
+    
+    
     
     public void alterarPessoa(Pessoa pessoa){
         //Substitui uma pessoa na lista que tem o mesmo id

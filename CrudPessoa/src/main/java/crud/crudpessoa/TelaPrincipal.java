@@ -75,13 +75,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         botaoLimpar = new javax.swing.JButton();
         botaoSalvar = new javax.swing.JButton();
         botaoApagar = new javax.swing.JButton();
-        botaoVerTabela = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(1000, 1000));
 
         jLabel1.setText("ID");
 
+        campoID.setEditable(false);
+        campoID.setEnabled(false);
         campoID.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 campoIDActionPerformed(evt);
@@ -135,13 +136,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
-        botaoVerTabela.setText("VER TABELA");
-        botaoVerTabela.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botaoVerTabelaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -150,8 +144,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(botaoVerTabela)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoApagar))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
@@ -212,9 +204,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoApagar)
-                    .addComponent(botaoVerTabela))
+                .addComponent(botaoApagar)
                 .addGap(62, 62, 62))
         );
 
@@ -236,29 +226,40 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
         // TODO add your handling code here:
-        String idStr = campoID.getText();
+        String idStr = null;
+
         String nome = campoNome.getText();
         String idadeStr = campoIdade.getText();
         String sexo = campoSexo.getText();
         
         int idade = Integer.parseInt(idadeStr); //converte a variavel idadestr para int
-        int id = Integer.parseInt(idStr);
         
         Pessoa pessoa = new Pessoa();
-        pessoa.setId(id);
+              
+        if(!campoID.getText().isEmpty()){
+            idStr = campoID.getText();
+            pessoa.setId(Integer.valueOf(idStr));
+        }
+        
         pessoa.setNome(nome);
         pessoa.setSexo(sexo);
         pessoa.setIdade(idade);
         
         PessoaDAO pessoaDAO = PessoaDAO.getInstancia();
-        pessoaDAO.adicionarPessoa(pessoa);
+        
+        if(pessoa.getId() > 0){
+            pessoaDAO.alterarPessoa(pessoa);
+        }
+        else{
+            pessoaDAO.adicionarPessoa(pessoa);
+        }
         
         //pessoaDAO.adicionarPessoa(pessoa);
         //pessoaDAO.alterarPessoa(pessoa);
         LimparCampos();
         
-        
-        
+        atualizarTabela();
+       
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
     private void campoIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoIDActionPerformed
@@ -281,11 +282,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         atualizarTabela(listaPessoas);
      
     }//GEN-LAST:event_botaoBuscarActionPerformed
-
-    private void botaoVerTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVerTabelaActionPerformed
-        // TODO add your handling code here:
-        atualizarTabela();
-    }//GEN-LAST:event_botaoVerTabelaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,7 +323,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton botaoBuscar;
     private javax.swing.JButton botaoLimpar;
     private javax.swing.JButton botaoSalvar;
-    private javax.swing.JButton botaoVerTabela;
     private javax.swing.JTextField campoID;
     private javax.swing.JTextField campoIdade;
     private javax.swing.JTextField campoNome;
