@@ -6,6 +6,7 @@ package crud.crudpessoa;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -91,6 +92,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel2.setText("NOME");
 
+        campoNome.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+                campoNomeAncestorMoved(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+
         jLabel3.setText("IDADE");
 
         jLabel4.setText("SEXO");
@@ -106,6 +117,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 "ID", "NOME", "IDADE", "SEXO"
             }
         ));
+        tabelaInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaInfoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabelaInfo);
 
         botaoBuscar.setText("BUSCAR");
@@ -257,7 +273,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //pessoaDAO.adicionarPessoa(pessoa);
         //pessoaDAO.alterarPessoa(pessoa);
         LimparCampos();
-        
         atualizarTabela();
        
     }//GEN-LAST:event_botaoSalvarActionPerformed
@@ -275,6 +290,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         String nomeStr = campoNome.getText();
         Pessoa pessoa = pessoaDAO.buscarPessoa(nomeStr);
       
+        campoID.setText(Integer.toString(pessoa.getId()));  //as duas formas funcionam 
+        //campoID.setText(String.valueOf(pessoa.getId()));      //funciona igual a linha acima
         campoNome.setText(pessoa.getNome());
         campoIdade.setText(String.valueOf(pessoa.getIdade()));
         campoSexo.setText(pessoa.getSexo());
@@ -284,6 +301,28 @@ public class TelaPrincipal extends javax.swing.JFrame {
         atualizarTabela(listaPessoas);
      
     }//GEN-LAST:event_botaoBuscarActionPerformed
+
+    private void campoNomeAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_campoNomeAncestorMoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoNomeAncestorMoved
+
+    
+    //Evento de clique na tabela
+    private void tabelaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaInfoMouseClicked
+        //JOptionPane.showMessageDialog(null, "Clique na table");
+        
+        Pessoa p = new Pessoa();
+        PessoaDAO pessoaDAO = PessoaDAO.getInstancia();
+        int index = tabelaInfo.getSelectedRow();
+        
+        p = pessoaDAO.buscarTodos().get(index);
+        campoID.setText(String.valueOf(p.getId()));
+        campoNome.setText(p.getNome());
+        campoIdade.setText(String.valueOf(p.getIdade()));
+        campoSexo.setText(p.getSexo());
+        
+        
+    }//GEN-LAST:event_tabelaInfoMouseClicked
 
     /**
      * @param args the command line arguments

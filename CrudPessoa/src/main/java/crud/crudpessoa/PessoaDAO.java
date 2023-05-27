@@ -25,9 +25,8 @@ public class PessoaDAO {
         return instancia;
     }
 
-    private List<Pessoa> lista = new ArrayList<>();
+    private List<Pessoa> lista = new ArrayList<>(); //Lista principal
     
-
     private PessoaDAO(){
         proximoID = 1;
     }
@@ -37,18 +36,7 @@ public class PessoaDAO {
         pessoa.setId(proximoID++);
         lista.add(pessoa); 
         System.out.println("Pessoa adicionada com sucesso: ID -  " + pessoa.getId());
-        
-        //proximoID++;
-       
     }
-    //Retorna todas as pessoas na lista
-    public List<Pessoa> buscarTodos(){
-        List<Pessoa> listaP = new ArrayList();
-        listaP.addAll(this.lista);
-        return listaP;  
-    }
-    
-    
     
     public void alterarPessoa(Pessoa pessoa){
         //Substitui uma pessoa na lista que tem o mesmo id
@@ -60,6 +48,13 @@ public class PessoaDAO {
         }
     }
     
+    //Retorna todas as pessoas na lista
+    public List<Pessoa> buscarTodos(){
+        List<Pessoa> listaP = new ArrayList();
+        listaP.addAll(this.lista); //adiciona todos os elementos da lista original dentro da lista que foi criada dentro dessa  funcao
+        return listaP;  
+    }
+    
     public Pessoa buscarPorId(int id){
         //Retorna uma pessoa da lista que tem o ID informado ou null se não tiver 
         for(Pessoa pessoa: lista){ //nesse bloco percorremos a lista de pesssoas verificando se a pessoa na iteracao atual possui o mesmo id que foi passado no parametro 
@@ -68,6 +63,16 @@ public class PessoaDAO {
             }
         }
         return null; //caso contrario retorna null se não for encontrada nenhuma pessoa
+    }
+     
+    //Retornar pessoa - Especificamente o Nome da pessoa 
+    public Pessoa buscarPessoa(String nome){
+        for(Pessoa pessoa : lista){
+            if(pessoa.getNome().equals(nome)){
+                return pessoa;
+            }
+        }
+        return null;
     }
     
     public void deletarPessoaPorId(int id){
@@ -84,16 +89,4 @@ public class PessoaDAO {
             System.out.println("Pessoa Removida da Lista! ");
         }
     }
-    
-    //Retornar pessoa - Especificamente o Nome da pessoa 
-    public Pessoa buscarPessoa(String nome){
-        for(Pessoa pessoa : lista){
-            if(pessoa.getNome().equals(nome)){
-                System.out.println("Pessoa Encontrada!");
-                return pessoa;
-            }
-        }
-        return null;
-    }
-    
 }
