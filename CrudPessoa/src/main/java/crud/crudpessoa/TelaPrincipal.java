@@ -26,6 +26,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         atualizarTabela(); 
     }
     
+    //Verifica a entrada do usuário
+    public boolean verificarEntradas(String nome, String idade, String sexo){
+        if(nome.isEmpty() || idade.isEmpty() || sexo.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!", "ERRO", JOptionPane.ERROR_MESSAGE);
+              return false;
+        }
+        return true;
+    }
+
+    
     private void atualizarTabela(){
         DefaultTableModel model = (DefaultTableModel) tabelaInfo.getModel();
         model.setRowCount(0);
@@ -230,12 +240,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoApagarActionPerformed
         // TODO add your handling code here:
         int id = Integer.parseInt(campoID.getText());
         pessoaDAO.deletarPessoaPorId(id);
+        JOptionPane.showMessageDialog(null,"Pessoa Apagada com Sucesso!");
         LimparCampos();
         atualizarTabela();
     }//GEN-LAST:event_botaoApagarActionPerformed
@@ -246,52 +258,49 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLimparActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        // TODO add your handling code here:
+   
         String idStr = null;
-
         String nome = campoNome.getText();
         String idadeStr = campoIdade.getText();
         String sexo = campoSexo.getText();
         
-        int idade = Integer.parseInt(idadeStr); //converte a variavel idadestr para int
+        if(verificarEntradas(nome, idadeStr, sexo)){
         
-        Pessoa pessoa = new Pessoa();
-              
-        if(!campoID.getText().isEmpty()){
-            idStr = campoID.getText();
-            pessoa.setId(Integer.valueOf(idStr));
+            int idade = Integer.parseInt(idadeStr); //converte a variavel idadestr para int
+
+            Pessoa pessoa = new Pessoa();
+
+            if (!campoID.getText().isEmpty()) {
+                idStr = campoID.getText();
+                pessoa.setId(Integer.valueOf(idStr));
+            }
+
+            pessoa.setNome(nome);
+            pessoa.setSexo(sexo);
+            pessoa.setIdade(idade);
+
+            PessoaDAOLista pessoaDAO = PessoaDAOLista.getInstancia();
+
+            if (pessoa.getId() > 0) {
+                pessoaDAO.alterarPessoa(pessoa);
+                JOptionPane.showMessageDialog(null, "Pessoa Alterada Com Sucesso");
+
+            } else {
+                pessoaDAO.adicionarPessoa(pessoa);
+                JOptionPane.showMessageDialog(null, "Pessoa Cadastrada Com Sucesso");
+            }
+            LimparCampos();
+            atualizarTabela();
         }
-        
-        pessoa.setNome(nome);
-        pessoa.setSexo(sexo);
-        pessoa.setIdade(idade);
-        
-        PessoaDAOLista pessoaDAO = PessoaDAOLista.getInstancia();
-        
-        if(pessoa.getId() > 0){
-            pessoaDAO.alterarPessoa(pessoa);
-        }
-        else{
-            pessoaDAO.adicionarPessoa(pessoa);
-        }
-        
-        //pessoaDAO.adicionarPessoa(pessoa);
-        //pessoaDAO.alterarPessoa(pessoa);
-        LimparCampos();
-        atualizarTabela();
-       
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
+    
     private void campoIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoIDActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_campoIDActionPerformed
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
-        // TODO add your handling code here:
-        //String idStr = campoID.getText();
-        //int id = Integer.parseInt(idStr);
-        //Pessoa pessoa = pessoaDAO.buscarPorId(id);
- 
+
         String nomeStr = campoNome.getText();
         Pessoa pessoa = pessoaDAO.buscarPessoa(nomeStr);
       
