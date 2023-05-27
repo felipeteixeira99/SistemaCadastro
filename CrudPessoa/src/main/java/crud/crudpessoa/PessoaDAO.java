@@ -86,10 +86,11 @@ public class PessoaDAO {
     }
     
     //Retornar pessoa - Especificamente o Nome da pessoa 
-    public String buscarPessoa(String nome){
+    public Pessoa buscarPessoa(String nome){
         for(Pessoa pessoa : lista){
-            if(nome == pessoa.getNome()){
-                return pessoa.getNome();
+            if(pessoa.getNome().equals(nome)){
+                System.out.println("Pessoa Encontrada!");
+                return pessoa;
             }
         }
         return null;

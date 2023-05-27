@@ -273,11 +273,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //Pessoa pessoa = pessoaDAO.buscarPorId(id);
  
         String nomeStr = campoNome.getText();
-        
         Pessoa pessoa = pessoaDAO.buscarPessoa(nomeStr);
-        
-        
-        
+      
         campoNome.setText(pessoa.getNome());
         campoIdade.setText(String.valueOf(pessoa.getIdade()));
         campoSexo.setText(pessoa.getSexo());

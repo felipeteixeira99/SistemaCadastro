@@ -38,7 +38,7 @@ public class CrudPessoa {
             System.out.println("-----------------------------");
         }
         
-        pessoaDAO.buscarPessoa("Sarah");
+        pessoaDAO.buscarPessoa("Teste");
         
         
         //Pessoa pessoaAlterada = new Pessoa();
