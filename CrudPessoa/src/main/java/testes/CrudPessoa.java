@@ -1,12 +1,14 @@
 
-package crud.crudpessoa;
+package testes;
 
+import crud.crudpessoa.Pessoa;
+import crud.crudpessoa.PessoaDAOLista;
 import java.util.List;
 
 public class CrudPessoa {
 
     public static void main(String[] args) {
-        PessoaDAO pessoaDAO = PessoaDAO.getInstancia();
+        PessoaDAOLista pessoaDAO = PessoaDAOLista.getInstancia();
         
         Pessoa pessoa1 = new Pessoa();
         pessoa1.setId(1);
