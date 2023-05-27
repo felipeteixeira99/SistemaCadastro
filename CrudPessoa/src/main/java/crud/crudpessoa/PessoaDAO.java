@@ -70,8 +70,6 @@ public class PessoaDAO {
         return null; //caso contrario retorna null se não for encontrada nenhuma pessoa
     }
     
-    
-    
     public void deletarPessoaPorId(int id){
         //Apaga da lista a pessoa que tem o id que foi passado
         Pessoa pessoaRemovida = null; //cria uma variavel do tipo pessoa para armazenar a pessoa que sera removida da lista 
@@ -86,4 +84,15 @@ public class PessoaDAO {
             System.out.println("Pessoa Removida da Lista! ");
         }
     }
+    
+    //Retornar pessoa - Especificamente o Nome da pessoa 
+    public String buscarPessoa(String nome){
+        for(Pessoa pessoa : lista){
+            if(nome == pessoa.getNome()){
+                return pessoa.getNome();
+            }
+        }
+        return null;
+    }
+    
 }

@@ -268,10 +268,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
         // TODO add your handling code here:
-        String idStr = campoID.getText();
-        int id = Integer.parseInt(idStr);
+        //String idStr = campoID.getText();
+        //int id = Integer.parseInt(idStr);
+        //Pessoa pessoa = pessoaDAO.buscarPorId(id);
+ 
+        String nomeStr = campoNome.getText();
         
-        Pessoa pessoa = pessoaDAO.buscarPorId(id);
+        Pessoa pessoa = pessoaDAO.buscarPessoa(nomeStr);
+        
+        
         
         campoNome.setText(pessoa.getNome());
         campoIdade.setText(String.valueOf(pessoa.getIdade()));

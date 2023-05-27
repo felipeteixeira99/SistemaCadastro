@@ -22,8 +22,8 @@ public class CrudPessoa {
         pessoa2.setSexo("Feminino");
         pessoaDAO.adicionarPessoa(pessoa2);
         
-        List<Pessoa> lista = pessoaDAO.buscarTodos();
-        lista.clear();
+        //List<Pessoa> lista = pessoaDAO.buscarTodos();
+        //lista.clear();
         
         
         /*
@@ -37,6 +37,8 @@ public class CrudPessoa {
             System.out.println("SEXO: " + pessoa.getSexo());
             System.out.println("-----------------------------");
         }
+        
+        pessoaDAO.buscarPessoa("Sarah");
         
         
         //Pessoa pessoaAlterada = new Pessoa();
