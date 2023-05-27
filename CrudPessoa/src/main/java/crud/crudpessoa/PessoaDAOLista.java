@@ -13,21 +13,21 @@ import java.util.List;
  */
 
 //clase 
-public class PessoaDAO {
+public class PessoaDAOLista {
     
-    private static PessoaDAO instancia;
+    private static PessoaDAOLista instancia;
     private int proximoID; // variavel que irá armazenar o proximo ID 
     
-    public static PessoaDAO getInstancia(){
+    public static PessoaDAOLista getInstancia(){
         if(instancia == null){
-            instancia = new PessoaDAO();
+            instancia = new PessoaDAOLista();
         }
         return instancia;
     }
 
     private List<Pessoa> lista = new ArrayList<>(); //Lista principal
     
-    private PessoaDAO(){
+    private PessoaDAOLista(){
         proximoID = 1;
     }
     

@@ -15,14 +15,14 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
     
-    private PessoaDAO pessoaDAO;
+    private PessoaDAOLista pessoaDAO;
 
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
-        pessoaDAO = PessoaDAO.getInstancia();
+        pessoaDAO = PessoaDAOLista.getInstancia();
         atualizarTabela(); 
     }
     
@@ -99,6 +99,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 campoNomeAncestorMoved(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        campoNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                campoNomeActionPerformed(evt);
             }
         });
 
@@ -261,7 +266,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pessoa.setSexo(sexo);
         pessoa.setIdade(idade);
         
-        PessoaDAO pessoaDAO = PessoaDAO.getInstancia();
+        PessoaDAOLista pessoaDAO = PessoaDAOLista.getInstancia();
         
         if(pessoa.getId() > 0){
             pessoaDAO.alterarPessoa(pessoa);
@@ -312,7 +317,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //JOptionPane.showMessageDialog(null, "Clique na table");
         
         Pessoa p = new Pessoa();
-        PessoaDAO pessoaDAO = PessoaDAO.getInstancia();
+        PessoaDAOLista pessoaDAO = PessoaDAOLista.getInstancia();
         int index = tabelaInfo.getSelectedRow();
         
         p = pessoaDAO.buscarTodos().get(index);
@@ -323,6 +328,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_tabelaInfoMouseClicked
+
+    private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_campoNomeActionPerformed
 
     /**
      * @param args the command line arguments
