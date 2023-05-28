@@ -24,9 +24,9 @@ public class CrudPessoa {
         pessoa2.setSexo("Feminino");
         pessoaDAO.adicionarPessoa(pessoa2);
         
+        
         //List<Pessoa> lista = pessoaDAO.buscarTodos();
         //lista.clear();
-        
         
         /*
         List<Pessoa> listaPessoas = pessoaDAO.buscarTodos(); //armazena os objetos do tipo pessoa e armazena uma dentro de uma lista 
@@ -83,7 +83,5 @@ public class CrudPessoa {
         }
         
        */ 
-    }
-    
-    
+    }   
 }

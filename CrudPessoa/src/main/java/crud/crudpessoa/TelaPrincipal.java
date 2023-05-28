@@ -26,6 +26,31 @@ public class TelaPrincipal extends javax.swing.JFrame {
         atualizarTabela(); 
     }
     
+    
+    //Verifica a entrada do usuário
+    public boolean verificarEntradas(String nome, String idadeStr, String sexo){
+        if(nome.isEmpty() || idadeStr.isEmpty() || sexo.isEmpty()){
+            JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!", "ERRO", JOptionPane.ERROR_MESSAGE);
+              return false;
+        }
+   
+       //Verifica se o campo Idade é do tipo Inteiro
+       try{
+           int idade = Integer.parseInt(idadeStr);
+       }catch (NumberFormatException e){
+           JOptionPane.showMessageDialog(null,"O campo idade deve ser um numero inteiro", "ERRO", JOptionPane.ERROR_MESSAGE);
+           return false;
+       }
+       
+       if(!nome.matches("[a-zA-Z\\s]+") || !sexo.matches("[a-zA-Z\\s]+")){
+           JOptionPane.showMessageDialog(null,"Os campos Nome e Sexo devem conter apenas letras", "ERRO", JOptionPane.ERROR_MESSAGE);
+           return false;
+       }
+       
+       return true;
+    }
+
+    
     private void atualizarTabela(){
         DefaultTableModel model = (DefaultTableModel) tabelaInfo.getModel();
         model.setRowCount(0);
@@ -92,6 +117,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jLabel2.setText("NOME");
 
+        campoNome.setActionCommand("<Not Set>");
+        campoNome.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         campoNome.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
             }
@@ -187,11 +214,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
                                     .addComponent(campoIdade))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addGap(8, 8, 8))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(campoSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 70, Short.MAX_VALUE)))
-                                .addGap(8, 8, 8))
+                                        .addGap(0, 108, Short.MAX_VALUE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addComponent(botaoLimpar)
@@ -199,7 +227,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addComponent(botaoBuscar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(botaoSalvar)))
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,12 +258,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void botaoApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoApagarActionPerformed
         // TODO add your handling code here:
         int id = Integer.parseInt(campoID.getText());
         pessoaDAO.deletarPessoaPorId(id);
+        JOptionPane.showMessageDialog(null,"Pessoa Apagada com Sucesso!");
         LimparCampos();
         atualizarTabela();
     }//GEN-LAST:event_botaoApagarActionPerformed
@@ -246,52 +276,49 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLimparActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-        // TODO add your handling code here:
+   
         String idStr = null;
+        String nome = campoNome.getText().toUpperCase();
+        String idadeStr = campoIdade.getText().toUpperCase();
+        String sexo = campoSexo.getText().toUpperCase();
+        
+        if(verificarEntradas(nome, idadeStr, sexo)){
+        
+            int idade = Integer.parseInt(idadeStr); //converte a variavel idadestr para int
 
-        String nome = campoNome.getText();
-        String idadeStr = campoIdade.getText();
-        String sexo = campoSexo.getText();
-        
-        int idade = Integer.parseInt(idadeStr); //converte a variavel idadestr para int
-        
-        Pessoa pessoa = new Pessoa();
-              
-        if(!campoID.getText().isEmpty()){
-            idStr = campoID.getText();
-            pessoa.setId(Integer.valueOf(idStr));
+            Pessoa pessoa = new Pessoa();
+
+            if (!campoID.getText().isEmpty()) {
+                idStr = campoID.getText();
+                pessoa.setId(Integer.valueOf(idStr));
+            }
+
+            pessoa.setNome(nome);
+            pessoa.setSexo(sexo);
+            pessoa.setIdade(idade);
+
+            PessoaDAOLista pessoaDAO = PessoaDAOLista.getInstancia();
+
+            if (pessoa.getId() > 0) {
+                pessoaDAO.alterarPessoa(pessoa);
+                JOptionPane.showMessageDialog(null, "Pessoa Alterada Com Sucesso");
+
+            } else {
+                pessoaDAO.adicionarPessoa(pessoa);
+                JOptionPane.showMessageDialog(null, "Pessoa Cadastrada Com Sucesso");
+            }
+            LimparCampos();
+            atualizarTabela();
         }
-        
-        pessoa.setNome(nome);
-        pessoa.setSexo(sexo);
-        pessoa.setIdade(idade);
-        
-        PessoaDAOLista pessoaDAO = PessoaDAOLista.getInstancia();
-        
-        if(pessoa.getId() > 0){
-            pessoaDAO.alterarPessoa(pessoa);
-        }
-        else{
-            pessoaDAO.adicionarPessoa(pessoa);
-        }
-        
-        //pessoaDAO.adicionarPessoa(pessoa);
-        //pessoaDAO.alterarPessoa(pessoa);
-        LimparCampos();
-        atualizarTabela();
-       
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
+    
     private void campoIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoIDActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_campoIDActionPerformed
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
-        // TODO add your handling code here:
-        //String idStr = campoID.getText();
-        //int id = Integer.parseInt(idStr);
-        //Pessoa pessoa = pessoaDAO.buscarPorId(id);
- 
+
         String nomeStr = campoNome.getText();
         Pessoa pessoa = pessoaDAO.buscarPessoa(nomeStr);
       
