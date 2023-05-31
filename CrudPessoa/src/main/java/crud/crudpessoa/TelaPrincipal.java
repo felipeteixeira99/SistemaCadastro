@@ -320,7 +320,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
 
         String nomeStr = campoNome.getText();
-        Pessoa pessoa = pessoaDAO.buscarPessoa(nomeStr);
+        Pessoa pessoa = pessoaDAO.buscarPessoa(nomeStr.toUpperCase()); //passa a pessoa a ser buscada com letras maisusculas para evitar que o nome seja buscado errado
+        
       
         campoID.setText(Integer.toString(pessoa.getId()));  //as duas formas funcionam 
         //campoID.setText(String.valueOf(pessoa.getId()));      //funciona igual a linha acima
