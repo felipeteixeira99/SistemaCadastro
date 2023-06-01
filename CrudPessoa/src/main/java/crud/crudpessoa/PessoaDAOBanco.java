@@ -17,6 +17,7 @@ public class PessoaDAOBanco implements PessoaPersistencia {
     public static PessoaDAOBanco getInstancia(){
         if(instancia == null){
             instancia = new PessoaDAOBanco();
+            System.out.println("Teste");
         }
         return instancia;
     }
