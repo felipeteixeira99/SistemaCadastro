@@ -4,6 +4,7 @@
  */
 package crud.crudpessoa;
 
+import interfaces.PessoaPersistencia;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -15,14 +16,15 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
     
-    private PessoaDAOLista pessoaDAO;
+    private PessoaPersistencia pessoaDAO;
 
     /**
      * Creates new form TelaPrincipal
      */
     public TelaPrincipal() {
         initComponents();
-        pessoaDAO = PessoaDAOLista.getInstancia();
+        
+        pessoaDAO = PessoaDAOBanco.getInstancia();
         atualizarTabela(); 
     }
     
@@ -190,43 +192,40 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(botaoApagar))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addContainerGap()
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(campoID, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(campoNome, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(campoIdade))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(8, 8, 8))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(campoSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 108, Short.MAX_VALUE))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(botaoLimpar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addComponent(botaoBuscar)
+                                .addContainerGap()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(campoID, javax.swing.GroupLayout.DEFAULT_SIZE, 78, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(botaoSalvar)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(campoNome, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(campoIdade))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(campoSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)))
+                        .addGap(203, 203, 203))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(botaoApagar)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(botaoLimpar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botaoBuscar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(botaoSalvar)))))
                 .addContainerGap(13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -297,15 +296,19 @@ public class TelaPrincipal extends javax.swing.JFrame {
             pessoa.setSexo(sexo);
             pessoa.setIdade(idade);
 
-            PessoaDAOLista pessoaDAO = PessoaDAOLista.getInstancia();
-
             if (pessoa.getId() > 0) {
                 pessoaDAO.alterarPessoa(pessoa);
                 JOptionPane.showMessageDialog(null, "Pessoa Alterada Com Sucesso");
 
             } else {
                 pessoaDAO.adicionarPessoa(pessoa);
-                JOptionPane.showMessageDialog(null, "Pessoa Cadastrada Com Sucesso");
+                new Thread(){
+                    @Override
+                    public void run() {
+                        JOptionPane.showMessageDialog(null, "Pessoa Cadastrada Com Sucesso");
+                    }
+                  
+                }.start();
             }
             LimparCampos();
             atualizarTabela();
@@ -322,17 +325,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
         String nomeStr = campoNome.getText();
         Pessoa pessoa = pessoaDAO.buscarPessoa(nomeStr.toUpperCase()); //passa a pessoa a ser buscada com letras maisusculas para evitar que o nome seja buscado errado
         
-      
-        campoID.setText(Integer.toString(pessoa.getId()));  //as duas formas funcionam 
-        //campoID.setText(String.valueOf(pessoa.getId()));      //funciona igual a linha acima
-        campoNome.setText(pessoa.getNome());
-        campoIdade.setText(String.valueOf(pessoa.getIdade()));
-        campoSexo.setText(pessoa.getSexo());
+        if(pessoa != null){
+            campoID.setText(Integer.toString(pessoa.getId()));  //as duas formas funcionam 
+            //campoID.setText(String.valueOf(pessoa.getId()));      //funciona igual a linha acima
+            campoNome.setText(pessoa.getNome());
+            campoIdade.setText(String.valueOf(pessoa.getIdade()));
+            campoSexo.setText(pessoa.getSexo());
 
-        List<Pessoa> listaPessoas = new ArrayList<>();
-        listaPessoas.add(pessoa);
-        atualizarTabela(listaPessoas);
-     
+            List<Pessoa> listaPessoas = new ArrayList<>();
+            listaPessoas.add(pessoa);
+            atualizarTabela(listaPessoas);
+        }
+        else{
+            System.out.println("Pessoa não encontrada!");
+            atualizarTabela(new ArrayList());
+        }
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
     private void campoNomeAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_campoNomeAncestorMoved
@@ -345,7 +352,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         //JOptionPane.showMessageDialog(null, "Clique na table");
         
         Pessoa p = new Pessoa();
-        PessoaDAOLista pessoaDAO = PessoaDAOLista.getInstancia();
         int index = tabelaInfo.getSelectedRow();
         
         p = pessoaDAO.buscarTodos().get(index);
@@ -364,8 +370,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+        
+        
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
