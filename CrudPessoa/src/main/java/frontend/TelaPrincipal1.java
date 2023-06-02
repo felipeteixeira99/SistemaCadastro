@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package crud.crudpessoa;
+package frontend;
 
+import crud.crudpessoa.Pessoa;
+import crud.crudpessoa.PessoaDAOBanco;
 import interfaces.PessoaPersistencia;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +12,16 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Felipe
  */
-public class TelaPrincipal extends javax.swing.JFrame {
+public class TelaPrincipal1 extends javax.swing.JFrame {
     
     private PessoaPersistencia pessoaDAO;
 
-    /**
-     * Creates new form TelaPrincipal
-     */
-    public TelaPrincipal() {
+    public TelaPrincipal1() {
         initComponents();
         
         pessoaDAO = PessoaDAOBanco.getInstancia();
         atualizarTabela(); 
     }
-    
     
     //Verifica a entrada do usuário
     public boolean verificarEntradas(String nome, String idadeStr, String sexo){
@@ -105,7 +99,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         botaoApagar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(1000, 1000));
 
         jLabel1.setText("ID");
 
@@ -388,20 +381,21 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TelaPrincipal1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TelaPrincipal().setVisible(true);
+                new TelaPrincipal1().setVisible(true);
             }
         });
     }
