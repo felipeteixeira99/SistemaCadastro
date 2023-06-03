@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -214,8 +215,7 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(campoSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -352,9 +352,14 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
     private void tabelaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaInfoMouseClicked
         //JOptionPane.showMessageDialog(null, "Clique na table");
         
-        Pessoa p = new Pessoa();
-        int index = tabelaInfo.getSelectedRow();
+        //quando há o clique apos buscar uma pessoa ele retorna a primeira pessoa da grid
         
+        Pessoa p = new Pessoa();
+        int index = tabelaInfo.getSelectedRow(); //index recebe a linha selecionada dentro da table 
+        //tabelaInfo.getValueAt(index, 1).toString(); 
+        //int index = tabelaInfo.convertRowIndexToModel(tabelaInfo.getSelectedRow());
+        //tableModel.getValueAt(row, 1).toString();
+       
         p = pessoaDAO.buscarTodos().get(index);
         campoID.setText(String.valueOf(p.getId()));
         campoNome.setText(p.getNome());
