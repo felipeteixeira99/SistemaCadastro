@@ -60,13 +60,6 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
         }      
     }
     
-    private void LimparCampos(){
-        // esse metodo limpa os campos - ele adiciona um espaco vazio em cada um deles
-        campoID.setText("");
-        campoNome.setText("");
-        campoIdade.setText("");
-        campoSexo.setText("");
-    }
     
     private void atualizarTabela(List<Pessoa> listaPessoas){
         DefaultTableModel model = (DefaultTableModel) tabelaInfo.getModel();
@@ -79,6 +72,18 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
             model.addRow(row);         
         }
     }
+    
+    
+    private void LimparCampos(){
+        // esse metodo limpa os campos - ele adiciona um espaco vazio em cada um deles
+        campoID.setText("");
+        campoNome.setText("");
+        campoIdade.setText("");
+        campoSexo.setText("");
+        atualizarTabela();
+    }
+    
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -351,21 +356,19 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
     //Evento de clique na tabela
     private void tabelaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaInfoMouseClicked
         //JOptionPane.showMessageDialog(null, "Clique na table");
-        
         //quando há o clique apos buscar uma pessoa ele retorna a primeira pessoa da grid
         
         Pessoa p = new Pessoa();
-        int index = tabelaInfo.getSelectedRow(); //index recebe a linha selecionada dentro da table 
-        //tabelaInfo.getValueAt(index, 1).toString(); 
-        //int index = tabelaInfo.convertRowIndexToModel(tabelaInfo.getSelectedRow());
-        //tableModel.getValueAt(row, 1).toString();
-       
-        p = pessoaDAO.buscarTodos().get(index);
+        int indexLinha = tabelaInfo.getSelectedRow(); //index recebe a linha selecionada dentro da table 
+        int indexColuna = (int) tabelaInfo.getValueAt(indexLinha, 0); //retorna o valor dentro da linha e coluna selecionada
+        System.out.println(indexColuna);
+        
+        //p = pessoaDAO.buscarTodos().get(elementoColuna);
+        p = pessoaDAO.buscarPorId(indexColuna); //Busca dentro do banco o ID dessa pessoa e abaixo seta os dados dessa pessoa nos campos para edição
         campoID.setText(String.valueOf(p.getId()));
         campoNome.setText(p.getNome());
         campoIdade.setText(String.valueOf(p.getIdade()));
         campoSexo.setText(p.getSexo());
-        
         
     }//GEN-LAST:event_tabelaInfoMouseClicked
 
