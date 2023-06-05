@@ -166,7 +166,9 @@ public class PessoaDAOBanco implements PessoaPersistencia {
         try{
             Connection conn = connect();
             Statement statement = conn.createStatement();
-            String sql = "select ID, NOME, IDADE, SEXO from pessoas where upper(NOME) = '" + nome + "'";
+            String sql = "SELECT ID, NOME, IDADE, SEXO FROM pessoas WHERE UPPER(NOME) LIKE '%" + nome.toUpperCase() + "%'";
+
+           // String sql = "select ID, NOME, IDADE, SEXO from pessoas where  upper(NOME) LIKE = '" + nome + "'";
             ResultSet resultSet = statement.executeQuery(sql);
             if(resultSet.next()){
                 int idBanco = resultSet.getInt("ID");
