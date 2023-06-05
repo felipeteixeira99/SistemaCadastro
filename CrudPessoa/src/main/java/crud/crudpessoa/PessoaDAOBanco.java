@@ -57,7 +57,6 @@ public class PessoaDAOBanco implements PessoaPersistencia {
         catch(Exception e){
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -189,7 +188,37 @@ public class PessoaDAOBanco implements PessoaPersistencia {
         }
         return p;     
     }
-
+    
+    public List<Pessoa> buscarPessoas(String busca) {
+        
+        List<Pessoa> pessoas = new ArrayList();
+        
+        try{
+            Connection conn = connect();
+            Statement statement = conn.createStatement();
+            String sql = "SELECT ID, NOME, IDADE, SEXO FROM pessoas WHERE UPPER(NOME) LIKE '%" + busca.toUpperCase() + "%'";
+            ResultSet resultSet = statement.executeQuery(sql);
+            while(resultSet.next()){
+                int id = resultSet.getInt("ID");
+                String nome = resultSet.getString("NOME");
+                int idade = resultSet.getInt("IDADE");
+                String sexo = resultSet.getString("SEXO");
+                
+                Pessoa p = new Pessoa();
+                p.setId(id);
+                p.setNome(nome);
+                p.setIdade(idade);
+                p.setSexo(sexo);
+                pessoas.add(p);
+            }
+            conn.close();  
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        return pessoas;
+    }
+     
     @Override
     public void deletarPessoaPorId(int id) {
         try{
@@ -202,6 +231,5 @@ public class PessoaDAOBanco implements PessoaPersistencia {
         catch(Exception e){
             e.printStackTrace();
         }
-    }
-    
+    } 
 }
