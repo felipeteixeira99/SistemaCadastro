@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package frontend;
 
 import crud.crudpessoa.Pessoa;
@@ -11,82 +7,79 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
  * @author Felipe
  */
 public class TelaPrincipal extends javax.swing.JFrame {
-    
+
     private PessoaPersistencia pessoaDAO;
 
-    /**
-     * Creates new form TelaPrincipal
-     */
     public TelaPrincipal() {
         initComponents();
-        
+
         pessoaDAO = PessoaDAOBanco.getInstancia();
-        atualizarTabela(); 
-    }
-    
-    
-    //Verifica a entrada do usuário
-    public boolean verificarEntradas(String nome, String idadeStr, String sexo){
-        if(nome.isEmpty() || idadeStr.isEmpty() || sexo.isEmpty()){
-            JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!", "ERRO", JOptionPane.ERROR_MESSAGE);
-              return false;
-        }
-   
-       //Verifica se o campo Idade é do tipo Inteiro
-       try{
-           int idade = Integer.parseInt(idadeStr);
-       }catch (NumberFormatException e){
-           JOptionPane.showMessageDialog(null,"O campo idade deve ser um numero inteiro", "ERRO", JOptionPane.ERROR_MESSAGE);
-           return false;
-       }
-       
-       if(!nome.matches("[a-zA-Z\\s]+") || !sexo.matches("[a-zA-Z\\s]+")){
-           JOptionPane.showMessageDialog(null,"Os campos Nome e Sexo devem conter apenas letras", "ERRO", JOptionPane.ERROR_MESSAGE);
-           return false;
-       }
-       
-       return true;
+        atualizarTabela();
     }
 
-    
-    private void atualizarTabela(){
+    //Verifica a entrada do usuário
+    public boolean verificarEntradas(String nome, String idadeStr, String sexo) {
+        if (nome.isEmpty() || idadeStr.isEmpty() || sexo.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        //Verifica se o campo Idade é do tipo Inteiro
+        try {
+            int idade = Integer.parseInt(idadeStr);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "O campo idade deve ser um numero inteiro", "ERRO", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (!nome.matches("[a-zA-Z\\s]+") || !sexo.matches("[a-zA-Z\\s]+")) {
+            JOptionPane.showMessageDialog(null, "Os campos Nome e Sexo devem conter apenas letras", "ERRO", JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        return true;
+    }
+
+    private void atualizarTabela() {
         DefaultTableModel model = (DefaultTableModel) tabelaInfo.getModel();
         model.setRowCount(0);
-        
+
         //Obtem a lista de pessoas do banco de dados 
         List<Pessoa> listaPessoas = pessoaDAO.buscarTodos();
-        for(Pessoa pessoa : listaPessoas){
-            Object[] row = {pessoa.getId(),pessoa.getNome(),pessoa.getIdade(),pessoa.getSexo()};
+        for (Pessoa pessoa : listaPessoas) {
+            Object[] row = {pessoa.getId(), pessoa.getNome(), pessoa.getIdade(), pessoa.getSexo()};
             model.addRow(row);
-        }      
+        }
     }
-    
-    private void LimparCampos(){
+
+    private void atualizarTabela(List<Pessoa> listaPessoas) {
+        DefaultTableModel model = (DefaultTableModel) tabelaInfo.getModel();
+        model.setRowCount(0);
+
+        List<Pessoa> listaPessoas1 = pessoaDAO.buscarTodos();
+
+        for (Pessoa pessoa : listaPessoas) {
+            Object[] row = {pessoa.getId(), pessoa.getNome(), pessoa.getIdade(), pessoa.getSexo()};
+            model.addRow(row);
+        }
+    }
+
+    private void LimparCampos() {
         // esse metodo limpa os campos - ele adiciona um espaco vazio em cada um deles
         campoID.setText("");
         campoNome.setText("");
         campoIdade.setText("");
-        campoSexo.setText("");
+        //campoSexo.setText("");
+        atualizarTabela();
     }
-    
-    private void atualizarTabela(List<Pessoa> listaPessoas){
-        DefaultTableModel model = (DefaultTableModel) tabelaInfo.getModel();
-        model.setRowCount(0);
-        
-        List<Pessoa> listaPessoas1 = pessoaDAO.buscarTodos();
-        
-        for(Pessoa pessoa : listaPessoas){
-            Object[] row = {pessoa.getId(), pessoa.getNome(), pessoa.getIdade(), pessoa.getSexo()};
-            model.addRow(row);         
-        }
-    }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -98,15 +91,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         campoIdade = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        campoSexo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaInfo = new javax.swing.JTable();
         botaoBuscar = new javax.swing.JButton();
         botaoLimpar = new javax.swing.JButton();
         botaoSalvar = new javax.swing.JButton();
         botaoApagar = new javax.swing.JButton();
+        jComboBoxSexo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("TELA CADASTRO");
 
         jLabel1.setText("ID");
 
@@ -187,6 +181,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMININO" }));
+        jComboBoxSexo.setToolTipText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -212,11 +209,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
                             .addComponent(campoIdade))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(campoSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)))
-                        .addGap(203, 203, 203))
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+                                .addGap(203, 203, 203))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -243,7 +241,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                     .addComponent(campoID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoBuscar, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -265,7 +263,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         int id = Integer.parseInt(campoID.getText());
         pessoaDAO.deletarPessoaPorId(id);
-        JOptionPane.showMessageDialog(null,"Pessoa Apagada com Sucesso!");
+        JOptionPane.showMessageDialog(null, "Pessoa Apagada com Sucesso!");
         LimparCampos();
         atualizarTabela();
     }//GEN-LAST:event_botaoApagarActionPerformed
@@ -276,14 +274,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoLimparActionPerformed
 
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
-   
+
         String idStr = null;
         String nome = campoNome.getText().toUpperCase();
         String idadeStr = campoIdade.getText().toUpperCase();
-        String sexo = campoSexo.getText().toUpperCase();
-        
-        if(verificarEntradas(nome, idadeStr, sexo)){
-        
+        String sexo = jComboBoxSexo.getSelectedItem().toString();
+
+        if (verificarEntradas(nome, idadeStr, sexo)) {
+
             int idade = Integer.parseInt(idadeStr); //converte a variavel idadestr para int
 
             Pessoa pessoa = new Pessoa();
@@ -296,6 +294,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             pessoa.setNome(nome);
             pessoa.setSexo(sexo);
             pessoa.setIdade(idade);
+            
 
             if (pessoa.getId() > 0) {
                 pessoaDAO.alterarPessoa(pessoa);
@@ -303,12 +302,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
             } else {
                 pessoaDAO.adicionarPessoa(pessoa);
-                new Thread(){
+                new Thread() {
                     @Override
                     public void run() {
                         JOptionPane.showMessageDialog(null, "Pessoa Cadastrada Com Sucesso");
                     }
-                  
+
                 }.start();
             }
             LimparCampos();
@@ -316,7 +315,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_botaoSalvarActionPerformed
 
-    
+
     private void campoIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoIDActionPerformed
 
     }//GEN-LAST:event_campoIDActionPerformed
@@ -325,43 +324,53 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         String nomeStr = campoNome.getText();
         Pessoa pessoa = pessoaDAO.buscarPessoa(nomeStr.toUpperCase()); //passa a pessoa a ser buscada com letras maisusculas para evitar que o nome seja buscado errado
-        
-        if(pessoa != null){
-            campoID.setText(Integer.toString(pessoa.getId()));  //as duas formas funcionam 
-            //campoID.setText(String.valueOf(pessoa.getId()));      //funciona igual a linha acima
-            campoNome.setText(pessoa.getNome());
-            campoIdade.setText(String.valueOf(pessoa.getIdade()));
-            campoSexo.setText(pessoa.getSexo());
 
-            List<Pessoa> listaPessoas = new ArrayList<>();
-            listaPessoas.add(pessoa);
-            atualizarTabela(listaPessoas);
+        //Verificacao do Campo Nome
+        if (nomeStr.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Campo nome não pode ser vazio!", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
-        else{
-            System.out.println("Pessoa não encontrada!");
-            atualizarTabela(new ArrayList());
+        else if(!nomeStr.matches("[a-zA-Z\\s]+")){
+            JOptionPane.showMessageDialog(null, "Campo nome deve conter apenas letras!", "ERRO", JOptionPane.ERROR_MESSAGE);  
+            LimparCampos();
         }
+        
+        else {
+            if (pessoa != null) {
+                List<Pessoa> listaPessoas = new ArrayList<>();
+                listaPessoas.add(pessoa);
+                LimparCampos();
+                atualizarTabela(PessoaDAOBanco.getInstancia().buscarPessoas(nomeStr));
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Pessoa Não Encontrada", "ERRO", JOptionPane.ERROR_MESSAGE);
+                System.out.println("Pessoa não encontrada!");
+                atualizarTabela(new ArrayList());
+                
+            }
+        }    
     }//GEN-LAST:event_botaoBuscarActionPerformed
 
     private void campoNomeAncestorMoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_campoNomeAncestorMoved
         // TODO add your handling code here:
     }//GEN-LAST:event_campoNomeAncestorMoved
 
-    
     //Evento de clique na tabela
     private void tabelaInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaInfoMouseClicked
         //JOptionPane.showMessageDialog(null, "Clique na table");
-        
+        //quando há o clique apos buscar uma pessoa ele retorna a primeira pessoa da grid
+
         Pessoa p = new Pessoa();
-        int index = tabelaInfo.getSelectedRow();
-        
-        p = pessoaDAO.buscarTodos().get(index);
+        int indexLinha = tabelaInfo.getSelectedRow(); //index recebe a linha selecionada dentro da table 
+        int indexColuna = (int) tabelaInfo.getValueAt(indexLinha, 0); //retorna o valor dentro da linha e coluna selecionada
+        System.out.println(indexColuna);
+
+        //p = pessoaDAO.buscarTodos().get(elementoColuna);
+        p = pessoaDAO.buscarPorId(indexColuna); //Busca dentro do banco o ID dessa pessoa e abaixo seta os dados dessa pessoa nos campos para edição
         campoID.setText(String.valueOf(p.getId()));
         campoNome.setText(p.getNome());
         campoIdade.setText(String.valueOf(p.getIdade()));
-        campoSexo.setText(p.getSexo());
-        
-        
+        jComboBoxSexo.setSelectedItem(p.getSexo());
+
     }//GEN-LAST:event_tabelaInfoMouseClicked
 
     private void campoNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoNomeActionPerformed
@@ -371,12 +380,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        
-        
+
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -398,6 +404,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -415,7 +424,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JTextField campoID;
     private javax.swing.JTextField campoIdade;
     private javax.swing.JTextField campoNome;
-    private javax.swing.JTextField campoSexo;
+    private javax.swing.JComboBox<String> jComboBoxSexo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
