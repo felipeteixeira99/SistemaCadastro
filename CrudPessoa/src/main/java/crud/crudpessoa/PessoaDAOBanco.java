@@ -360,7 +360,8 @@ public class PessoaDAOBanco implements PessoaPersistencia {
             //Statement statement = conn.createStatement();
             String sql = "SELECT ID, NOME, IDADE, SEXO FROM pessoas WHERE UPPER(NOME) LIKE ?";
             PreparedStatement ps = conn.prepareCall(sql);
-            ps.setString(1,"%" + busca.toUpperCase() + "%");
+            ps.setString(1, busca.toUpperCase() + "%"); //Estava buscando todas as pessoas de forma errada 
+            //ps.setString(1,"%" + busca.toUpperCase() + "%");
             ResultSet resultSet = ps.executeQuery();
             while(resultSet.next()){
                 int id = resultSet.getInt("ID");

@@ -76,7 +76,7 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
         campoID.setText("");
         campoNome.setText("");
         campoIdade.setText("");
-        campoSexo.setText("");
+        //campoSexo.setText("");
         atualizarTabela();
     }
 
@@ -91,16 +91,16 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         campoIdade = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        campoSexo = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaInfo = new javax.swing.JTable();
         botaoBuscar = new javax.swing.JButton();
         botaoLimpar = new javax.swing.JButton();
         botaoSalvar = new javax.swing.JButton();
         botaoApagar = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxSexo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("TELA CADASTRO");
 
         jLabel1.setText("ID");
 
@@ -181,8 +181,8 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMININO" }));
-        jComboBox1.setToolTipText("");
+        jComboBoxSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMININO" }));
+        jComboBoxSexo.setToolTipText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,9 +213,8 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
                                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
                                 .addGap(203, 203, 203))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(campoSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -242,8 +241,7 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
                     .addComponent(campoID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(campoIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(campoSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(botaoBuscar, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -280,7 +278,7 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
         String idStr = null;
         String nome = campoNome.getText().toUpperCase();
         String idadeStr = campoIdade.getText().toUpperCase();
-        String sexo = campoSexo.getText().toUpperCase();
+        String sexo = jComboBoxSexo.getSelectedItem().toString();
 
         if (verificarEntradas(nome, idadeStr, sexo)) {
 
@@ -296,6 +294,7 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
             pessoa.setNome(nome);
             pessoa.setSexo(sexo);
             pessoa.setIdade(idade);
+            
 
             if (pessoa.getId() > 0) {
                 pessoaDAO.alterarPessoa(pessoa);
@@ -370,7 +369,7 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
         campoID.setText(String.valueOf(p.getId()));
         campoNome.setText(p.getNome());
         campoIdade.setText(String.valueOf(p.getIdade()));
-        campoSexo.setText(p.getSexo());
+        jComboBoxSexo.setSelectedItem(p.getSexo());
 
     }//GEN-LAST:event_tabelaInfoMouseClicked
 
@@ -423,8 +422,7 @@ public class TelaPrincipal1 extends javax.swing.JFrame {
     private javax.swing.JTextField campoID;
     private javax.swing.JTextField campoIdade;
     private javax.swing.JTextField campoNome;
-    private javax.swing.JTextField campoSexo;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxSexo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
