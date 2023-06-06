@@ -22,5 +22,9 @@ public class TestarBanco {
         else{
             System.err.println("Pessoa Inexistente!");
         }
+        
+        //System.out.println(PessoaDAOBanco.getInstancia().buscarTodos().toString());
     }
+    
+   
 }
