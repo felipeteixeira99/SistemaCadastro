@@ -23,10 +23,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
         pessoaDAO = PessoaDAOBanco.getInstancia();
         atualizarTabela();
     }
+    
+    
 
     //Verifica a entrada do usuário
     public boolean verificarEntradas(String nome, String idadeStr, String sexo) {
-        if (nome.isEmpty() || idadeStr.isEmpty() || sexo.isEmpty()) {
+        if (nome.trim().isEmpty() || idadeStr.trim().isEmpty() || sexo.trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!", "ERRO", JOptionPane.ERROR_MESSAGE);
             return false;
         }

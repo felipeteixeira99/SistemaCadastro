@@ -14,16 +14,8 @@ import crud.crudpessoa.PessoaDAOBanco;
 public class TestarBanco {
     
     public static void main(String[] args) {
-        PessoaDAOBanco dao = new PessoaDAOBanco();
-        Pessoa p = dao.buscarPorId(12);
-        if(p  != null){
-            System.out.println("Nome: " + p.getNome());
-        }
-        else{
-            System.err.println("Pessoa Inexistente!");
-        }
-        
-        //System.out.println(PessoaDAOBanco.getInstancia().buscarTodos().toString());
+        String texto = "   teste  teste  ";
+        System.out.println(texto.trim());
     }
     
    
