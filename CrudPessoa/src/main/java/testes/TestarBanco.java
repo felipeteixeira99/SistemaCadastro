@@ -17,6 +17,4 @@ public class TestarBanco {
         String texto = "   teste  teste  ";
         System.out.println(texto.trim());
     }
-    
-   
 }
