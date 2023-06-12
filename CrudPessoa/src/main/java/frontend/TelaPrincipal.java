@@ -278,7 +278,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void botaoSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoSalvarActionPerformed
 
         String idStr = null;
-        String nome = campoNome.getText().toUpperCase();
+        String nome = campoNome.getText().toUpperCase().trim();
         String idadeStr = campoIdade.getText().toUpperCase();
         String sexo = jComboBoxSexo.getSelectedItem().toString();
 
@@ -293,7 +293,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 pessoa.setId(Integer.valueOf(idStr));
             }
 
-            pessoa.setNome(nome);
+            pessoa.setNome(nome.trim());
             pessoa.setSexo(sexo);
             pessoa.setIdade(idade);
             
@@ -324,7 +324,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void botaoBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoBuscarActionPerformed
 
-        String nomeStr = campoNome.getText();
+        String nomeStr = campoNome.getText().trim();
         Pessoa pessoa = pessoaDAO.buscarPessoa(nomeStr.toUpperCase()); //passa a pessoa a ser buscada com letras maisusculas para evitar que o nome seja buscado errado
 
         //Verificacao do Campo Nome
